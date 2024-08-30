@@ -11,16 +11,29 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    # Create a new .NET console project
+    - name: Create .NET project
+      run: |
+        mkdir MyApp
+        cd MyApp
+        dotnet new console -n MyApp
+        mv ../*.cs ./Program.cs
+    
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.x' # Specify your .NET version
+    
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./MyApp/MyApp.csproj
+    
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build ./MyApp/MyApp.csproj --configuration Release
+    
     - name: Publish
-      run: dotnet publish -c Release -r win-x64 --self-contained -o ./output
+      run: dotnet publish ./MyApp/MyApp.csproj -c Release -r win-x64 --self-contained -o ./output
+    
     - name: Upload executable
       uses: actions/upload-artifact@v2
       with:

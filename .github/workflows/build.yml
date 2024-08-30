@@ -12,13 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    # Create a new .NET console project
+    # Create a new .NET console project in the current directory
     - name: Create .NET project
       run: |
-        mkdir MyApp
-        cd MyApp
         dotnet new console -n MyApp
-        mv ../*.cs ./Program.cs
+        mv ./Program.cs ./MyApp/Program.cs
     
     - name: Set up .NET
       uses: actions/setup-dotnet@v1

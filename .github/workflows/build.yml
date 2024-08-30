@@ -12,7 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    # Create a new .NET console project in the current directory
     - name: Create .NET project
       run: |
         dotnet new console -n MyApp
@@ -21,7 +20,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.x' # Specify your .NET version
+        dotnet-version: '8.x' # Use .NET 8.x SDK
     
     - name: Restore dependencies
       run: dotnet restore ./MyApp/MyApp.csproj

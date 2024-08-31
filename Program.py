@@ -2,6 +2,9 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 import re
 import subprocess
+import logging
+
+logging.basicConfig(filename='script.log', level=logging.DEBUG)
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -34,10 +37,11 @@ class RequestHandler(BaseHTTPRequestHandler):
     def run_vbs_script(self, vbs_file_path):
         """Execute the VBS script using Windows Script Host."""
         try:
+            logging.debug(f"Running VBS script: {vbs_file_path}")
             subprocess.run(["wscript.exe", vbs_file_path], check=True)
-            print(f"Executed {vbs_file_path} successfully.")
+            logging.debug(f"Executed {vbs_file_path} successfully.")
         except subprocess.CalledProcessError as e:
-            print(f"Error executing VBS script: {e}")
+            logging.error(f"Error executing VBS script: {e}")
         finally:
             # Clean up the VBS file after execution
             if os.path.exists(vbs_file_path):
@@ -74,3 +78,5 @@ if __name__ == "__main__":
     ngrok_info_path = './ngrok_information.txt'
     port = get_port_from_file(ngrok_info_path)
     run(port=port)
+
+    input("Press Enter to exit...")

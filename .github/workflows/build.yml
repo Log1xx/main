@@ -26,7 +26,7 @@ jobs:
       run: dotnet restore ./MyApp/MyApp.csproj
     
     - name: Build
-      run: dotnet build ./MyApp/MyApp.csproj --configuration Release
+      run: dotnet build ./MyApp/MyApp.csproj --configuration Debug
     
     - name: Publish
       run: dotnet publish ./MyApp/MyApp.csproj -c Release -r win-x64 --self-contained -o ./output
